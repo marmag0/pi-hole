@@ -19,7 +19,8 @@ LOCAL_IP=yourPiHoleIpInHomeNetwork
 CLOUDFLARE_TOKEN=yourSecretToken
 ```
 
-5. Run the app (add `-d` to run in detached mode):
+5. Remove coments from all the lines of `cloudflared` service inside `docker-compose.yml` file, to make it active
+6. Run the app (add `-d` to run in detached mode):
 
 ```bash
 docker compose up
@@ -28,8 +29,7 @@ docker compose up
 ## Deployment without Cloudflare
 
 1. Make sure Docker is installed.
-2. Comment out the entire `cloudflared` service in `docker-compose.yml` (add `#` before each line).
-3. Set up environment variables:
+2. Set up environment variables:
 
 - `API_PASSWORD` - password for accessing Pi-hole configuration; make it hard to guess
 - `LOCAL_IP` - the IP address of the device on which Pi-hole is hosted, but if deployed without Cloudflare integration it can be left blank
@@ -39,7 +39,7 @@ API_PASSWORD=superHardPasswd
 LOCAL_IP=yourPiHoleIpInHomeNetwork
 ```
 
-4. Run the app (add `-d` to run in detached mode):
+3. Run the app (add `-d` to run in detached mode):
 
 ```bash
 docker compose up
