@@ -1,60 +1,39 @@
-# Pi-hole with Cloudflare
+# Pi-hole Anywhere with Cloudflare
 
-This repository contains a Pi-hole deployment using `cloudflared` (Cloudflare Tunnel) for easy access to the Pi-hole dashboard.
+This repository provides a step-by-step guide to deploying **Pi-hole** using **Docker** and **Cloudflare** services so you can access it from any location.
 
-## Safe Deployment: Step-by-Step
+It uses a free tool called **Cloudflare Mesh** to restrict access to authorized users outside your LAN. This enables remote access to your Pi-hole while minimizing risk and without exposing your entire infrastructure.
 
-1. Make sure Docker is installed.
-2. Create a Cloudflare Tunnel in Cloudflare Zero Trust and obtain the tunnel token (it will be used in `.env` shortly). The tunnel should only expose port `80`/`HTTP`; use it only for the Pi-hole web UI.
-3. Create a Cloudflare Application with an access control policy for the domain specified during tunnel configuration. This limits access to only the users you specify.
-4. Set up environment variables:
+For more information about **Pi-hole**, refer to its [web page](https://pi-hole.net), the [docker-pi-hole repository](https://github.com/pi-hole/docker-pi-hole), and the [official documentation](https://docs.pi-hole.net/docker/).
 
-- `API_PASSWORD` - password for accessing Pi-hole configuration; make it hard to guess
-- `LOCAL_IP` - the IP address of the device on which Pi-hole is hosted (used to avoid conflicts with Cloudflare Tunnel's DNS setting)
-- `CLOUDFLARE_TOKEN` - token used to connect the tunnel to the app
+For more information about **Cloudflare Mesh**, refer to its [official documentation](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-mesh/). Note that Mesh, while stable, is still considered beta and is under active development.
 
-```bash
-API_PASSWORD=superHardPasswd
-LOCAL_IP=yourPiHoleIpInHomeNetwork
-CLOUDFLARE_TOKEN=yourSecretToken
-```
+## Requirements
 
-5. Remove coments from all the lines of `cloudflared` service inside `docker-compose.yml` file, to make it active
-6. Run the app (add `-d` to run in detached mode):
+- **Basic requirements**
+  - Docker installed (Docker Engine or Docker Desktop). See the [installation guide](https://docs.docker.com/engine/install/).
+  - A free Cloudflare account - [create one here](https://www.cloudflare.com).
+- **Requirements for the full experience**
+  - A domain name you control.
 
-```bash
-docker compose up
-```
+## Deployment: Step-by-Step
 
-## Deployment without Cloudflare
+### Environment Preparation
 
-1. Make sure Docker is installed.
-2. Set up environment variables:
+1. Clone this Git repository to your server and change your CWD to it.
+2. Navigate to the Mesh panel in Cloudflare: `Protect & Connect` >> `Mesh` >> `Add node`.
 
-- `API_PASSWORD` - password for accessing Pi-hole configuration; make it hard to guess
-- `LOCAL_IP` - the IP address of the device on which Pi-hole is hosted, but if deployed without Cloudflare integration it can be left blank
+![Cloudflare web UI screenshot - navigating to Mesh](https://marmag0.github.io/endpoints/pi-hole-anywhere/cloudflare-mesh-ui-1.png)
 
-```bash
-API_PASSWORD=superHardPasswd
-LOCAL_IP=yourPiHoleIpInHomeNetwork
-```
+3. Add your server as a node to the Mesh. Choose its name (within mesh), install `warp-svc.service`, verify that the new node is visible within the Mesh dashboard. It should have been assigned a Mesh IP address (something like `100.96.x.x`).
 
-3. Run the app (add `-d` to run in detached mode):
+![Cloudflare web UI screenshot - node connectivity](https://marmag0.github.io/endpoints/pi-hole-anywhere/cloudflare-mesh-ui-2.png)
 
-```bash
-docker compose up
-```
+4. Install Cloudflare One Client on your device, which should have access to Pi-hole in the future (for DNS or configuration reasons). Full instructions can be found under the `Connect to your mesh` button.
 
-## Stopping and Deleting the App
+![Cloudflare web UI screenshot - node connectivity](https://marmag0.github.io/endpoints/pi-hole-anywhere/cloudflare-mesh-ui-3.png)
 
-- Stop the application while preserving data stored in volumes. After another `docker compose up`, it will resume in the same state as before you ran `docker compose down`.
+5. Check connectivity within the Mesh, e.g. `ping -c 5 100.96.x.x` from one node to another.
+6. If everything works, both nodes are online and you can ping them - you're ready for Pi-hole deployment!
 
-```bash
-docker compose down
-```
-
-- Stop the application and remove all saved data volumes on the server:
-
-```bash
-docker compose down -v
-```
+### Deploying Pi-hole with Docker

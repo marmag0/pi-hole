@@ -1,11 +1,14 @@
 services:
-  pihole:
+  pi-hole:
     container_name: pihole
     image: pihole/pihole:latest
     ports:
-      # DNS Ports
+      # DNS Ports (local)
       - "${LOCAL_IP}:53:53/tcp"
       - "${LOCAL_IP}:53:53/udp"
+      # DNS Ports (external)
+      - "${MESH_IP}:53:53/tcp"
+      - "${MESH_IP}:53:53/udp"
       # HTTP Ports
       - "80:80/tcp"
       - "443:443/tcp"
@@ -16,11 +19,3 @@ services:
     volumes:
       - "./etc-pihole:/etc/pihole"
     restart: unless-stopped
-
-#  cloudflared:
-#    image: cloudflare/cloudflared:latest
-#    container_name: cloudflared-tunnel
-#    restart: unless-stopped
-#    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TOKEN}
-#    depends_on:
-#      - pihole
