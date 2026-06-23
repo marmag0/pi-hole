@@ -37,3 +37,57 @@ For more information about **Cloudflare Mesh**, refer to its [official documenta
 6. If everything works, both nodes are online and you can ping them - you're ready for Pi-hole deployment!
 
 ### Deploying Pi-hole with Docker
+
+1. Make sure that Docker is running.
+2. Set up environment variables inside `.env` file:
+   - `API_PASSWORD` - password used to access Pi-hole dashboard, make sure it's strong
+   - `LOCAL_IP` - local IP address of your server
+   - `MESH_IP` - mesh IP address of your server
+
+```bash
+API_PASSWORD=superHardPasswd
+LOCAL_IP=yourPiHoleServerIpInHomeNetwork
+MESH_IP=yourPiHoleServerIpInMeshNetwork
+```
+
+3. Deploy Pi-hole using the provided script and follow its instructions if they occur (recommended):
+   - `./deploy.sh` - standard deployment, with logs displayed in terminal (you can always switch it to detached mode by pressing `d`)
+   - `./deploy.sh -d` - detached deployment
+
+4. You can also run that by yourself using:
+   - `docker compose up`
+   - `docker compose up -d` - consider adding `-d` to don't block terminal with docker logs
+
+5. Verify that Pi-hole is working:
+   - Check that Pi-hole web interface is accessible from both your local IP and Mesh IP.
+   - If something goes wrong, check logs by attaching to the container: `docker compose attach pi-hole`.
+     - refer to [TODO]() for futher troubleshooting info...
+
+### Accessing Pi-hole via URL (optional)
+
+1. To perform this step, **you'll need a domain name you control**.
+2. ...
+
+### Basic Pi-Hole Configuration and Integration
+
+1. ...
+
+### Clean up & Troubleshooting
+
+1. ...
+
+## Extra
+
+### Backups and Auto Updates
+
+...
+
+### Easy CLI Blacklisting and Whitelisting
+
+...
+
+### TODO
+
+...
+
+## The End
