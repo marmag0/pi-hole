@@ -95,3 +95,10 @@ MESH_IP=yourPiHoleServerIpInMeshNetwork
 ...
 
 ## The End
+
+Thank you very much for exploring my repository! It took me a lot of time and effort to deliver such a detailed guide with useful (I guess) scripts. I hope it was useful and easy to understand.
+
+To see more of my work, check out my:
+
+- [GitHub Profile](https://github.com/marmag0)
+- [LinkedIn Profile](https://www.linkedin.com/in/mikolaj-mazur)
