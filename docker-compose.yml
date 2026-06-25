@@ -9,9 +9,7 @@ services:
       # DNS Ports (external)
       - "${MESH_IP}:53:53/tcp"
       - "${MESH_IP}:53:53/udp"
-      # HTTP Ports
-      - "80:80/tcp"
-      - "443:443/tcp"
+      # HTTP Ports - managed by Caddy
     environment:
       TZ: "Europe/Warsaw"
       FTLCONF_webserver_api_password: ${API_PASSWORD}
@@ -19,3 +17,19 @@ services:
     volumes:
       - "./etc-pihole:/etc/pihole"
     restart: unless-stopped
+
+  caddy:
+    image: caddy:latest
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:
