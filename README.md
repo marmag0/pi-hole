@@ -73,15 +73,26 @@ MESH_IP=yourPiHoleServerIpInMeshNetwork
 3. Wait for the new DNS record to propagate, then verify it by entering its URL in your browser. If it connects to your Pi-hole, that means it works.
 4. Now you (and only you) can access your Pi-hole web UI through an easily memorable URL. Even though the DNS A record is visible to everyone, they can't connect to your Mesh IP without being part of your mesh.
 
-![Pi-hole web UI logging screen](https://marmag0.github.io/endpoints/pi-hole-anywhere/cloudflare-dns-config.png)
+![Cloudflare DNS records manager](https://marmag0.github.io/endpoints/pi-hole-anywhere/cloudflare-dns-config.png)
 
-### Make your Connection Secure
+### Start Using Pi-Hole
 
-1. ...
+1. Open the Pi-hole web UI and enter your password. You should now see the Pi-hole dashboard with telemetry and configuration options.
+2. Choose your DNS provider at `SYSTEM` >> `Settings` >> `DNS`. I recommend Cloudflare One because it is secure and privacy-oriented, and it does not use your request data for profiling.
 
-### Basic Pi-Hole Configuration and Integration
+![Pi-hole DNS recursive resolver settings](https://marmag0.github.io/endpoints/pi-hole-anywhere/pi-hole-choose-DNS.png)
 
-1. ...
+3. To use Pi-hole on your device, update the DNS server settings to the Pi-hole IP addresses. Many devices allow multiple DNS servers for redundancy, so you can enter:
+
+```
+LOCAL_IP
+MESH_IP
+1.1.1.1
+```
+
+![On-device DNS settings](https://marmag0.github.io/endpoints/pi-hole-anywhere/dns-settings.png)
+
+4. This configuration lets your device try the local Pi-hole first. If your device is outside your LAN, it will use the Pi-hole Mesh IP instead. If Pi-hole is unavailable entirely, the device can still fall back to the global `1.1.1.1` resolver.
 
 ### Cleanup & Troubleshooting
 
