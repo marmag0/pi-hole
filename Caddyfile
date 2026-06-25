@@ -2,7 +2,7 @@ pi-hole.mmazur.org {
     # Redirect all HTTP traffic from / to /admin
     redir / /admin/
     # Redirect all traffic to 
-    reverse_proxy pi-hole:80
+    reverse_proxy pihole:80
     # Using internal SSL certificate
     tls internal
 }
