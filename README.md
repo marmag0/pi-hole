@@ -16,6 +16,20 @@ For more information about **Cloudflare Mesh**, refer to its [official documenta
 - **Requirements for the full experience**
   - A domain name you control.
 
+## Table of Contents
+
+- [Deployment: Step-by-Step](#deployment-step-by-step)
+  - [Environment Preparation](#environment-preparation)
+  - [Deploying Pi-hole with Docker](#deploying-pi-hole-with-docker)
+  - [Accessing Pi-hole via URL (optional)](#accessing-pi-hole-via-url-optional)
+  - [Start Using Pi-hole](#start-using-pi-hole)
+  - [Cleanup & Troubleshooting](#cleanup--troubleshooting)
+- [Extra](#extra)
+  - [Auto Updates](#auto-updates)
+  - [Backup](#backup)
+  - [Migration](#migration)
+- [The End](#the-end)
+
 ## Deployment: Step-by-Step
 
 ### Environment Preparation
