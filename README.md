@@ -130,17 +130,43 @@ MESH_IP
 
 ### Auto Updates
 
-The most crucial aspect of maintaing self-hosted apps is...
+Keeping self-hosted services up to date is one of the most important parts of maintaining a secure and reliable setup. For Pi-hole, a lightweight solution is often better than running a larger tool such as [Watchtower](https://containrrr.dev/watchtower/), especially on low-power hardware.
+
+The provided `docker-update.sh` script lets you update Pi-hole automatically with `cron` and also clean up unused Docker images after a successful refresh.
+
+1. Open `docker-update.sh` and adjust the log directory path if needed. The script will create it automatically if it does not exist.
+2. Run the script with the path to the folder that contains `docker-compose.yml`, for example: `./docker-update.sh "/path/to/pi-hole"`.
+3. If you want a backup before every update, uncomment the backup section in `docker-update.sh` and set the backup directory and the directories you want to archive.
+4. Add the script to `cron` for regular automatic updates >> `crontab -e`. A sample entry could look like this:
+
+```bash
+0 4 * * 0 /bin/bash /path/to/docker-update.sh /path/to/pi-hole
+```
+
+This will run the update once a week, on Sunday at 4:00 AM.
 
 ### Backup
 
-...
+If you want to preserve Pi-hole configuration before updating or migrating, you can use the provided `backup.sh` script.
+
+1. Open `backup.sh` and adjust `BACKUP_DIR` to the directory where you want your backup archive to be stored.
+2. Set `BACKUPED_DIRS` to the directories you want to archive. By default, these are the Pi-hole configuration folders that should be preserved.
+3. Run the script with:
+
+```bash
+./backup.sh
+```
+
+The script will create a timestamped `.tar.gz` archive in the backup directory.
 
 ### Migration
 
-### Easy CLI Blacklisting and Whitelisting
+If you need to move your Pi-hole setup to a new device or a new folder, you can do it in a few simple steps.
 
-...
+1. Copy your Pi-hole folder, including `docker-compose.yml`, the scripts, and the backup archive, to the new machine.
+2. Restore the backed up configuration directories to the expected paths or adjust the backup script settings to match the new environment.
+3. Run `./deploy.sh` from the folder that contains `docker-compose.yml` to bring the container back up.
+4. If you want to verify the setup, check that the Pi-hole web interface is reachable from both the local and Mesh IP addresses.
 
 ## The End
 

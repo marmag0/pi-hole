@@ -47,8 +47,8 @@ PROJECT_NAME=$(basename "$(pwd)")
 # backup options #
 # -------------- #
 
-#BACKUP_DIR="/home/user/..." # <-- adjust here
-#BACKUPED_DIRS=("/home/user/app-config/..." "/home/user/app-db/...") # <-- adjust here
+#BACKUP_DIR="/home/user/.../backup" # <-- adjust here
+#BACKUPED_DIRS=("/home/user/.../etc-pihole" "/home/user/.../etc-dnsmasq.d") # <-- adjust here
 #
 #for dir in "${BACKUPED_DIRS[@]}"; do
 #	if [ ! -d "${dir}" ]; then

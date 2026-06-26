@@ -12,7 +12,7 @@ log() {
 
 log "*" "Starting backup process..."
 
-BACKUP_DIR="/home/user/..." # <-- adjust here
+BACKUP_DIR="/home/user/.../backup" # <-- adjust here
 BACKUPED_DIRS=("/home/user/.../etc-pihole" "/home/user/.../etc-dnsmasq.d") # <-- adjust here
 
 for dir in "${BACKUPED_DIRS[@]}"; do
@@ -28,7 +28,7 @@ if [ ! -d "${BACKUP_DIR}" ]; then
 fi
 
 log "*" "Creating volume backup..."
-if ! tar -czvf "${BACKUP_DIR}/backup_$(date +%F).tar.gz" "${BACKUPED_DIRS[@]}"; then
+if ! sudo tar -czvf "${BACKUP_DIR}/backup_$(date +%F).tar.gz" "${BACKUPED_DIRS[@]}"; then
     log "!" "Error! Backup failed!"
     echo "----------------------------------------"
     exit 1
