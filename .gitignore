@@ -17,6 +17,7 @@ Icon_
 .VolumeIcon.icns
 .fseventsd
 etc-pihole/
+etc-dnsmasq.d/
 backup/
 
 # VS Code specific files

@@ -128,13 +128,15 @@ MESH_IP
 
 ## Extra
 
-### Backups and Auto Updates
+### Auto Updates
+
+The most crucial aspect of maintaing self-hosted apps is...
+
+### Backup
 
 ...
 
-### Rolling out a Backup or Migrating
-
-...
+### Migration
 
 ### Easy CLI Blacklisting and Whitelisting
 
