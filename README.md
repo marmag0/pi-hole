@@ -25,16 +25,27 @@ For more information about **Cloudflare Mesh**, refer to its [official documenta
 
 ![Cloudflare web UI screenshot - navigating to Mesh](https://marmag0.github.io/endpoints/pi-hole-anywhere/cloudflare-mesh-ui-1.png)
 
-3. Add your server as a node to the Mesh. Choose its name (within mesh), install `warp-svc.service`, verify that the new node is visible within the Mesh dashboard. It should have been assigned a Mesh IP address (something like `100.96.x.x`).
+3. Add your server as a node to the Mesh. Choose a name for the node, install `warp-svc.service`, and verify that the node is visible in the Mesh dashboard. It should have been assigned a Mesh IP address (something like `100.96.x.x`).
 
 ![Cloudflare web UI screenshot - node connectivity](https://marmag0.github.io/endpoints/pi-hole-anywhere/cloudflare-mesh-ui-2.png)
 
-4. Install Cloudflare One Client on your device, which should have access to Pi-hole in the future (for DNS or configuration reasons). Full instructions can be found under the `Connect to your mesh` button.
+4. Install the Cloudflare One client on your device that will access Pi-hole later (for DNS or configuration reasons). Full instructions can be found under the `Connect to your mesh` button.
 
 ![Cloudflare web UI screenshot - node connectivity](https://marmag0.github.io/endpoints/pi-hole-anywhere/cloudflare-mesh-ui-3.png)
 
 5. Check connectivity within the Mesh, e.g. `ping -c 5 100.96.x.x` from one node to another.
-6. If everything works, both nodes are online and you can ping them - you're ready for Pi-hole deployment!
+6. Disable Cloudflare's DNS enforcement in the Mesh network: `Main Panel` >> `Protect & Connect` >> `Zero Trust` >> `Team & Resources` >> `Devices` >> `Device profiles` (Cloudflare by default enforces nodes in your mesh to use its `1.1.1.1` DNS server - it's a great server, but we want to use Pi-hole.)
+7. When you see all device profiles, leave only Mesh Network Profile and Default enabled (if you haven't created any others manually), then click `...` >> `Configure` on `Mesh Network Profile`.
+
+![Device profiles in Cloudflare Zero Trust - 1](https://marmag0.github.io/endpoints/pi-hole-anywhere/cloudflare-profile-1.png)
+
+8. Scroll down to the `Service mode` section and select `Traffic only mode`.
+
+![Device profiles in Cloudflare Zero Trust - 2](https://marmag0.github.io/endpoints/pi-hole-anywhere/cloudflare-profile-2.png)
+
+9. If everything works, both nodes are online and you can ping them - you're ready for Pi-hole deployment!
+
+10. **EXTRA:** If you're using one of Cloudflare's premium plans, you can set up a default DNS for your Mesh that points to Pi-hole's IP address; in that case, leave `Traffic and DNS mode` enabled.
 
 ### Deploying Pi-hole with Docker
 
@@ -97,7 +108,7 @@ MESH_IP
 ### Cleanup & Troubleshooting
 
 - `docker compose down` - stop Pi-hole while preserving existing configuration.
-- `docker compose down` - stops Pi-hole and removes existing configuration and containers, but leaves created files by volumes.
+- `docker compose down --volumes` - stop Pi-hole and remove containers, while leaving any created volumes intact.
 - `./cleanup.sh` - script for full cleanup of Pi-hole. It stops the service and removes all saved data (good for hard resets).
 
 ## Extra
